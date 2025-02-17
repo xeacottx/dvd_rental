@@ -36,12 +36,26 @@ files = [
     {file = "psycopg2-2.9.10.tar.gz", hash = "sha256:12ec0b40b0273f95296233e8750441339298e6a572f7039da5b260e3c8b60e11"},
 ]
 
+[[package]]
+name = "schema"
+version = "0.7.7"
+description = "Simple data validation library"
+optional = true
+python-versions = "*"
+groups = ["main"]
+markers = "extra == \"schema\""
+files = [
+    {file = "schema-0.7.7-py2.py3-none-any.whl", hash = "sha256:5d976a5b50f36e74e2157b47097b60002bd4d42e65425fcc9c9befadb4255dde"},
+    {file = "schema-0.7.7.tar.gz", hash = "sha256:7da553abd2958a19dc2547c388cde53398b39196175a9be59ea1caf5ab0a1807"},
+]
+
 [extras]
 databases = ["mysqlclient", "psycopg2"]
 mysql = ["mysqlclient"]
 pgsql = ["psycopg2"]
+schema = ["schema"]
 
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.9"
-content-hash = "09e7b0851fc53915ca66d2b637efb4b335a4f1d4d1f3f838a9c50a46c053e102"
+content-hash = "b6e695ea0a32a5579ee3eb3d92560276d4bf36dc911adf24ca8e34bbdcd003b1"
