@@ -19,14 +19,28 @@ SP -> Stored procedures
     with the schema of the database, without doing so your
     application may be upgraded but your database not yet
 """
-
-
+from schema import Schema, And, Use, Optional, SchemaError
+from contextlib import contextmanager
 from psycopg2 import connect
 
-def create_db_connection():
-    return connect("dbname=dvdrental user=postgres password=postgres")
 
-def get_count(conn):
+schema = Schema([
+    {
+        "name": And(str, len),
+        "age": And(Use(int), lambda n: 18 <= n <= 65),
+        Optional("gender"): And(str, Use(str.lower), lambda s: s in ("squid", "kid"))
+    }
+])
+
+@contextmanager
+def create_db_connection():
+    db_conn = connect("dbname=dvdrental user=postgres password=postgres")
+    try:
+        yield db_conn
+    finally:
+        db_conn.close()
+
+def get_film_count(conn):
     with conn.cursor() as cur:
         cur.execute("SELECT count(*) FROM film")
         result = cur.fetchall()
@@ -37,5 +51,5 @@ if __name__ == "__main__":
     connection = create_db_connection()
 
     with connection as conn:
-        film_count = get_count(conn)
+        film_count = get_film_count(conn)
         print(film_count)
